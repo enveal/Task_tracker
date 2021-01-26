@@ -1,9 +1,10 @@
+import {useState} from 'react'
 import Header from './componenets/Header'
 import Tasks from './componenets/Tasks'
-import {useState} from 'react'
+import AddTask from './componenets/AddTask'
 
 function App() {
-
+  const [ShowAddTask, setShowAddTask] = useState(false)
   const [tasks,setTasks] = useState([
     {
         id:1,
@@ -25,6 +26,9 @@ function App() {
     }
 
 ])
+  const addTask = (task) =>{
+    console.log(task);
+  }
 
   const deletetask = (id) => {
     setTasks(tasks.filter((task) =>task.id!==id))
@@ -38,7 +42,8 @@ function App() {
 
   return (
     <div className="container">
-      <Header/>
+      <Header onAdd ={ ()=> setShowAddTask (!ShowAddTask) } showAdd={ShowAddTask}/>
+      {ShowAddTask &&<AddTask onAdd={addTask}/>}
       {tasks.length >0 ? <Tasks tasks={tasks} onDelete={deletetask} onToggle={toggleReminder} />:'No task to show'}
     </div>
   );
